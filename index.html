@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark" data-lang="en">
+
+<!-- ================================================================
+     HEAD
+     ================================================================ -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Yousef Ali - Portfolio</title>
+</head>
+
+<body>
+
+<!-- ================================================================
+     HEADER  (fixed top bar)
+     - <nav> holds ONLY section links + the sliding indicator span
+     - .toggle-container is a SIBLING of <nav>, NOT inside it,
+       so the indicator is always bounded within the nav links area
+     - .menu-btn is the hamburger (visible mobile only)
+     ================================================================ -->
+<header>
+
+    <nav id="navbar">
+        <a href="#home"     class="active" data-translate="home">Home</a>
+        <a href="#skills"              data-translate="skills">Skills</a>
+        <a href="#services"            data-translate="services">Services</a>
+        <a href="#projects"            data-translate="projects">Projects</a>
+        <a href="#contact"             data-translate="contact">Contact</a>
+        <!-- Sliding red underline — JS sets left + width on scroll -->
+        <span class="nav-indicator" id="navIndicator"></span>
+    </nav>
+
+    <!-- Toggles OUTSIDE <nav> so indicator never slides under them -->
+    <div class="toggle-container">
+        <button id="themeToggle" class="toggle-btn" aria-label="Toggle theme" title="Toggle theme">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+        <button id="langToggle" class="toggle-btn lang-btn" aria-label="Toggle language" title="Toggle language">
+            <span class="lang-label">AR</span>
+        </button>
+    </div>
+
+    <!-- Hamburger — 3 bars that animate to X on open -->
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+
+</header>
+
+
+<!-- ================================================================
+     HOME SECTION
+     ================================================================ -->
+<section class="home" id="home">
+
+    <div class="home-img">
+        <img src="pictures/picture1.jpeg" alt="profile picture">
+    </div>
+
+    <div class="home-content">
+
+        <!-- homeGreeting + myName both translate EN ↔ AR -->
+        <h1>
+            <span data-translate="homeGreeting">Hi, It's </span><span
+                class="highlight" data-translate="myName">Yousef Ali</span>
+        </h1>
+
+        <!-- homeSubtitle prefix translates; .typed-word is CSS animated -->
+        <h3 class="typing-text">
+            <span data-translate="homeSubtitle">I'm a </span><span class="typed-word"></span>
+        </h3>
+
+        <p data-translate="homeDescription">
+            Using Power BI, Tableau, SQL, and Excel, I translate complex, messy data
+            into sharp narratives that move executives from uncertainty to action.
+            While most analysts hand over reports, I deliver boardroom-ready insights
+            that have directly reduced operational costs, accelerated revenue cycles,
+            and eliminated the guesswork behind critical business decisions.
+        </p>
+
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/yousef-ali-93b773337/" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/yousefali2005" aria-label="GitHub">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.fiverr.com/s/xX3yxR1" aria-label="Fiverr">
+                <img src="pictures/fiverr.png" alt="Fiverr Icon" />
+            </a>
+            <a href="https://www.freelancer.com/u/yousefalimansor?sb=t" aria-label="Freelancer">
+                <img src="pictures/freelancer-icon.svg" alt="Freelancer Icon" />
+            </a>
+        </div>
+
+        <a href="#contact" class="btn" data-translate="getInTouch">Get in Touch</a>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================================
+     SKILLS SECTION
+     ================================================================ -->
+<section id="skills">
+
+    <h2 class="section-title" data-translate="skillsTitle">Skills</h2>
+
+    <div class="skills-container">
+
+        <div class="skill-card">
+            <i class="fa-solid fa-chart-line"></i>
+            <h3 data-translate="dataAnalysis">Data Analysis</h3>
+            <p data-translate="dataAnalysisDesc">Experience with Power BI, SQL, and data visualization tools.</p>
+        </div>
+
+        <div class="skill-card">
+            <i class="fa-solid fa-chart-bar"></i>
+            <h3 data-translate="powerBi">Power BI</h3>
+            <p data-translate="powerBiDesc">Advanced proficiency in creating interactive dashboards and reports using Power BI.</p>
+        </div>
+
+        <div class="skill-card">
+            <i class="fa-solid fa-database"></i>
+            <h3 data-translate="sql">SQL</h3>
+            <p data-translate="sqlDesc">Expertise in writing complex queries for data analysis.</p>
+        </div>
+
+        <div class="skill-card">
+            <i class="fa-solid fa-table"></i>
+            <h3 data-translate="excel">Excel</h3>
+            <p data-translate="excelDesc">Advanced proficiency in Excel for data manipulation and reporting.</p>
+        </div>
+
+        <!-- Add more skill cards here -->
+
+    </div>
+
+</section>
+
+
+<!-- ================================================================
+     SERVICES SECTION
+     ================================================================ -->
+<section id="services">
+
+    <h2 class="section-title" data-translate="servicesTitle">Services</h2>
+
+    <div class="services-container">
+
+        <div class="service-card">
+            <i class="fa-solid fa-chart-pie"></i>
+            <h3 data-translate="dataAnalysis">Data Analysis</h3>
+            <p data-translate="serviceDataAnalysisDesc">Providing data-driven insights to help businesses make informed decisions.</p>
+        </div>
+
+        <div class="service-card">
+            <i class="fa-solid fa-cogs"></i>
+            <h3 data-translate="dataViz">Data Visualization</h3>
+            <p data-translate="dataVizDesc">Creating interactive dashboards and reports to visualize data insights.</p>
+        </div>
+
+        <div class="service-card">
+            <i class="fa-solid fa-database"></i>
+            <h3 data-translate="databaseMgmt">Database Management</h3>
+            <p data-translate="databaseMgmtDesc">Efficient management of databases to ensure high performance and security.</p>
+        </div>
+
+        <!-- Add more service cards here -->
+
+    </div>
+
+</section>
+
+
+<!-- ================================================================
+     PROJECTS SECTION
+     ⚠️  IMPORTANT — to edit a project title or description:
+         1. Change the text here in the HTML  (what you see below)
+         2. Also update the matching key in the translations dictionary
+            inside the <script> section below (search for "Projects")
+     ================================================================ -->
+<section id="projects">
+
+    <h2 class="section-title" data-translate="projectsTitle">Projects</h2>
+
+    <div class="projects-container">
+
+        <div class="project-card">
+            <img src="pictures/project1.png" alt="Super Store Analytics">
+            <h3 data-translate="project1Title">Super Store Analytics</h3>
+            <p  data-translate="project1Desc">DEPI Graduation project focusing on analyzing sales data for a retail store.</p>
+            <a href="https://github.com/yousefali2005/DEPI-Graduation-Project.git" target="_blank" class="btn" data-translate="githubLink">GitHub</a>
+            <a href="https://projectlive.com" target="_blank" class="btn" data-translate="liveDemo">Live Demo</a>
+        </div>
+
+        <div class="project-card">
+            <img src="pictures/project2.png" alt="Project 2">
+            <h3 data-translate="project2Title">Project 2</h3>
+            <p  data-translate="project2Desc">Brief description of the project.</p>
+            <a href="https://github.com/your-project" target="_blank" class="btn" data-translate="githubLink">GitHub</a>
+            <a href="https://projectlive.com"         target="_blank" class="btn" data-translate="liveDemo">Live Demo</a>
+        </div>
+
+        <div class="project-card">
+            <img src="pictures/project3.png" alt="Project 3">
+            <h3 data-translate="project3Title">Project 3</h3>
+            <p  data-translate="project3Desc">Brief description of the project.</p>
+            <a href="https://github.com/your-project" target="_blank" class="btn" data-translate="githubLink">GitHub</a>
+            <a href="https://projectlive.com"         target="_blank" class="btn" data-translate="liveDemo">Live Demo</a>
+        </div>
+
+        <!-- Add more project cards here -->
+
+    </div>
+
+</section>
+
+
+<!-- ================================================================
+     CONTACT SECTION
+     ================================================================ -->
+<section id="contact">
+
+    <h2 class="section-title" data-translate="contactTitle">Contact</h2>
+
+    <form action="https://formspree.io/f/mkovqgnd" method="POST" class="contact-form">
+
+        <!-- Honeypot — hidden anti-spam field -->
+        <input type="text" name="_honey" style="display:none">
+
+        <label for="name"    data-translate="nameLabel">Name</label>
+        <input  type="text"  id="name"    name="name"    required
+                data-placeholder="namePlaceholder"    placeholder="Your name">
+
+        <label for="email"   data-translate="emailLabel">Email</label>
+        <input  type="email" id="email"   name="email"   required
+                data-placeholder="emailPlaceholder"   placeholder="Your email">
+
+        <label for="subject" data-translate="subjectLabel">Subject</label>
+        <input  type="text"  id="subject" name="subject"
+                data-placeholder="subjectPlaceholder" placeholder="Subject">
+
+        <label for="message" data-translate="messageLabel">Message</label>
+        <textarea            id="message" name="message" required
+                data-placeholder="messagePlaceholder" placeholder="Your message"></textarea>
+
+        <button type="submit" class="btn" data-translate="sendMessage">Send Message</button>
+
+    </form>
+
+</section>
+
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script>
+
+    /* ----------------------------------------------------------------
+       1. ELEMENT REFERENCES
+       ---------------------------------------------------------------- */
+    const html        = document.documentElement;
+    const menuBtn     = document.getElementById("menuBtn");
+    const navbar      = document.getElementById("navbar");
+    const indicator   = document.getElementById("navIndicator");
+    const themeToggle = document.getElementById("themeToggle");
+    const langToggle  = document.getElementById("langToggle");
+
+
+    /* ----------------------------------------------------------------
+       2. THEME TOGGLE  (dark ↔ light)
+          Shows the icon of the mode you are currently IN:
+            dark mode  → moon icon
+            light mode → sun icon
+       ---------------------------------------------------------------- */
+    themeToggle.addEventListener("click", () => {
+        const goingLight = html.getAttribute("data-theme") === "dark";
+        html.setAttribute("data-theme", goingLight ? "light" : "dark");
+        themeToggle.innerHTML = goingLight
+            ? '<i class="fa-solid fa-sun"></i>'
+            : '<i class="fa-solid fa-moon"></i>';
+    });
+
+
+    /* ----------------------------------------------------------------
+       3. TRANSLATIONS DICTIONARY
+       ⚠️  PROJECTS RULE — whenever you edit a project card in the HTML,
+           update the matching keys here too (both "en" and "ar" blocks).
+           The key names follow the pattern:  project1Title, project1Desc
+                                              project2Title, project2Desc  … etc.
+       ---------------------------------------------------------------- */
+    const translations = {
+
+        en: {
+            /* ── Navbar ── */
+            home:     "Home",
+            skills:   "Skills",
+            services: "Services",
+            projects: "Projects",
+            contact:  "Contact",
+
+            /* ── Home ── */
+            homeGreeting:    "Hi, It's ",
+            myName:          "Yousef Ali",
+            homeSubtitle:    "I'm a ",
+            homeDescription: "Using Power BI, Tableau, SQL, and Excel, I translate complex, messy data into sharp narratives that move executives from uncertainty to action. While most analysts hand over reports, I deliver boardroom-ready insights that have directly reduced operational costs, accelerated revenue cycles, and eliminated the guesswork behind critical business decisions.",
+            getInTouch:      "Get in Touch",
+
+            /* ── Skills ── */
+            skillsTitle:      "Skills",
+            dataAnalysis:     "Data Analysis",
+            dataAnalysisDesc: "Experience with Power BI, SQL, and data visualization tools.",
+            powerBi:          "Power BI",
+            powerBiDesc:      "Advanced proficiency in creating interactive dashboards and reports using Power BI.",
+            sql:              "SQL",
+            sqlDesc:          "Expertise in writing complex queries for data analysis.",
+            excel:            "Excel",
+            excelDesc:        "Advanced proficiency in Excel for data manipulation and reporting.",
+
+            /* ── Services ── */
+            servicesTitle:           "Services",
+            serviceDataAnalysisDesc: "Providing data-driven insights to help businesses make informed decisions.",
+            dataViz:                 "Data Visualization",
+            dataVizDesc:             "Creating interactive dashboards and reports to visualize data insights.",
+            databaseMgmt:            "Database Management",
+            databaseMgmtDesc:        "Efficient management of databases to ensure high performance and security.",
+
+            /* ── Projects ── (keep in sync with the HTML cards above) */
+            projectsTitle: "Projects",
+            project1Title: "Super Store Analytics",
+            project1Desc:  "DEPI Graduation project focusing on analyzing sales data for a retail store.",
+            project2Title: "Project 2",
+            project2Desc:  "Brief description of the project.",
+            project3Title: "Project 3",
+            project3Desc:  "Brief description of the project.",
+            githubLink:    "GitHub",
+            liveDemo:      "Live Demo",
+
+            /* ── Contact ── */
+            contactTitle:       "Contact",
+            nameLabel:          "Name",
+            namePlaceholder:    "Your name",
+            emailLabel:         "Email",
+            emailPlaceholder:   "Your email",
+            subjectLabel:       "Subject",
+            subjectPlaceholder: "Subject",
+            messageLabel:       "Message",
+            messagePlaceholder: "Your message",
+            sendMessage:        "Send Message",
+        },
+
+        ar: {
+            /* ── Navbar ── */
+            home:     "الرئيسية",
+            skills:   "المهارات",
+            services: "الخدمات",
+            projects: "المشاريع",
+            contact:  "تواصل معي",
+
+            /* ── Home ── */
+            homeGreeting:    "مرحباً، أنا ",
+            myName:          "يوسف علي",
+            homeSubtitle:    "أنا ",
+            homeDescription: "باستخدام Power BI وTableau وSQL وExcel، أحوّل البيانات المعقدة إلى رواية واضحة تنقل صانعي القرار من الحيرة إلى العمل. بينما يكتفي معظم المحللين بتقديم التقارير، أقدّم رؤى جاهزة لاجتماعات الإدارة أسهمت مباشرةً في خفض التكاليف التشغيلية، وتسريع دورات الإيرادات، وإزالة التخمين من وراء القرارات التجارية الحاسمة.",
+            getInTouch:      "تواصل معي",
+
+            /* ── Skills ── */
+            skillsTitle:      "المهارات",
+            dataAnalysis:     "تحليل البيانات",
+            dataAnalysisDesc: "خبرة في Power BI وSQL وأدوات تصور البيانات.",
+            powerBi:          "Power BI",
+            powerBiDesc:      "إتقان متقدم في إنشاء لوحات تحكم وتقارير تفاعلية باستخدام Power BI.",
+            sql:              "SQL",
+            sqlDesc:          "خبرة في كتابة استعلامات معقدة لتحليل البيانات.",
+            excel:            "Excel",
+            excelDesc:        "إتقان متقدم في Excel لمعالجة البيانات وإعداد التقارير.",
+
+            /* ── Services ── */
+            servicesTitle:           "الخدمات",
+            serviceDataAnalysisDesc: "تقديم رؤى مستندة إلى البيانات لمساعدة الشركات في اتخاذ قرارات مدروسة.",
+            dataViz:                 "تصور البيانات",
+            dataVizDesc:             "إنشاء لوحات تحكم وتقارير تفاعلية لعرض رؤى البيانات بصريًا.",
+            databaseMgmt:            "إدارة قواعد البيانات",
+            databaseMgmtDesc:        "إدارة فعّالة لقواعد البيانات لضمان الأداء العالي والأمان.",
+
+            /* ── Projects ── (keep in sync with the HTML cards above) */
+            projectsTitle: "المشاريع",
+            project1Title: "تحليلات متجر تجزئه",
+            project1Desc:  "مشروع تخرج DEPI لتحليل بيانات المبيعات الخاصة بمتجر تجزئة.",
+            project2Title: "المشروع الثاني",
+            project2Desc:  "وصف مختصر للمشروع.",
+            project3Title: "المشروع الثالث",
+            project3Desc:  "وصف مختصر للمشروع.",
+            githubLink:    "GitHub",
+            liveDemo:      "عرض مباشر",
+
+            /* ── Contact ── */
+            contactTitle:       "تواصل معي",
+            nameLabel:          "الاسم",
+            namePlaceholder:    "اسمك",
+            emailLabel:         "البريد الإلكتروني",
+            emailPlaceholder:   "بريدك الإلكتروني",
+            subjectLabel:       "الموضوع",
+            subjectPlaceholder: "موضوع الرسالة",
+            messageLabel:       "الرسالة",
+            messagePlaceholder: "رسالتك",
+            sendMessage:        "إرسال الرسالة",
+        }
+
+    };
+
+
+    /* ----------------------------------------------------------------
+       4. APPLY TRANSLATIONS
+          Called on load and every time the lang toggle is clicked.
+       ---------------------------------------------------------------- */
+    function applyTranslations(lang) {
+        const t = translations[lang];
+
+        /* All [data-translate] elements */
+        document.querySelectorAll("[data-translate]").forEach(el => {
+            const key = el.getAttribute("data-translate");
+            if (t[key] !== undefined) el.textContent = t[key];
+        });
+
+        /* Input / textarea placeholders */
+        document.querySelectorAll("[data-placeholder]").forEach(el => {
+            const key = el.getAttribute("data-placeholder");
+            if (t[key] !== undefined) el.placeholder = t[key];
+        });
+
+        /* Browser tab title */
+        document.title = t.myName + " - Portfolio";
+
+        /* Aria labels */
+        themeToggle.setAttribute("aria-label", lang === "ar" ? "تبديل الوضع"  : "Toggle theme");
+        langToggle .setAttribute("aria-label", lang === "ar" ? "تبديل اللغة" : "Toggle language");
+
+        /* RTL / LTR direction */
+        html.setAttribute("dir",  lang === "ar" ? "rtl" : "ltr");
+        html.setAttribute("lang", lang);
+
+        /* Lang button shows the OTHER language you can switch to */
+        langToggle.querySelector(".lang-label").textContent = lang === "ar" ? "EN" : "AR";
+
+        /* Re-position indicator after layout may shift */
+        const activeLink = navbar.querySelector("a.active");
+        if (activeLink) moveIndicator(activeLink);
+    }
+
+    langToggle.addEventListener("click", () => {
+        const newLang = html.getAttribute("data-lang") === "en" ? "ar" : "en";
+        html.setAttribute("data-lang", newLang);
+        applyTranslations(newLang);
+    });
+
+
+    /* ----------------------------------------------------------------
+       5. SMOOTH SLIDING NAV INDICATOR
+          moveIndicator() reads the link's bounding rect relative to
+          the navbar container and animates left + width via CSS.
+          Because the indicator lives INSIDE <nav> (which ends before
+          the toggle buttons), it is naturally bounded to nav links.
+       ---------------------------------------------------------------- */
+    function moveIndicator(link) {
+        const navRect  = navbar.getBoundingClientRect();
+        const linkRect = link.getBoundingClientRect();
+        indicator.style.width = linkRect.width + "px";
+        indicator.style.left  = (linkRect.left - navRect.left) + "px";
+    }
+
+    function setActiveLink(id) {
+        document.querySelectorAll("#navbar a[href^='#']").forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + id) {
+                link.classList.add("active");
+                moveIndicator(link);
+            }
+        });
+    }
+
+    /* Watch sections — fires when section enters the middle zone of viewport */
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) setActiveLink(entry.target.id);
+        });
+    }, {
+        root:       null,
+        rootMargin: "-40% 0px -50% 0px",
+        threshold:  0
+    });
+
+    document.querySelectorAll("section[id]").forEach(s => sectionObserver.observe(s));
+
+    /* Recompute on resize (responsive font changes can shift link positions) */
+    window.addEventListener("resize", () => {
+        const active = navbar.querySelector("a.active");
+        if (active) moveIndicator(active);
+    });
+
+
+    /* ----------------------------------------------------------------
+       6. HAMBURGER MENU  (mobile)
+          .open on menuBtn  → animates 3 bars into an X
+          .active on navbar → slides the dropdown panel in
+       ---------------------------------------------------------------- */
+    menuBtn.addEventListener("click", () => {
+        menuBtn.classList.toggle("open");
+        navbar.classList.toggle("active");
+    });
+
+    /* Close dropdown + reset hamburger when any link is tapped */
+    document.querySelectorAll("#navbar a[href^='#']").forEach(link => {
+        link.addEventListener("click", () => {
+            navbar.classList.remove("active");
+            menuBtn.classList.remove("open");
+        });
+    });
+
+
+    /* ----------------------------------------------------------------
+       7. INITIALISATION  (runs after full DOM is ready)
+       ---------------------------------------------------------------- */
+    document.addEventListener("DOMContentLoaded", () => {
+        applyTranslations("en");
+        const firstActive = navbar.querySelector("a.active");
+        if (firstActive) moveIndicator(firstActive);
+    });
+
+</script>
+
+</body>
+</html>

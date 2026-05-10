@@ -1,0 +1,867 @@
+/* ================================================================
+   GOOGLE FONTS
+   ================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/* ================================================================
+   CSS CUSTOM PROPERTIES  (design tokens)
+   All colors, backgrounds, and shadows use variables so that
+   switching data-theme from "dark" to "light" updates every element.
+   ================================================================ */
+:root {
+    /* Dark mode — default */
+    --bg-color:       #000000;
+    --text-color:     #ffffff;
+    --primary-color:  #b74b4b;
+
+    --card-bg:        #111111;
+    --card-text:      #ffffff;
+    --muted-color:    #aaaaaa;
+
+    --header-bg:      rgba(0, 0, 0, 0.85);
+    --nav-mobile-bg:  #161616;
+    --input-bg:       #1a1a1a;
+    --input-border:   #333333;
+
+    --shadow-sm:      rgba(183, 75, 75, 0.20);
+    --shadow-md:      rgba(183, 75, 75, 0.30);
+    --shadow-lg:      rgba(183, 75, 75, 0.45);
+}
+
+html[data-theme="light"] {
+    /* Light mode — overrides */
+    --bg-color:       #f4f4f4;
+    --text-color:     #1a1a1a;
+    --primary-color:  #b74b4b;
+
+    --card-bg:        #ffffff;
+    --card-text:      #1a1a1a;
+    --muted-color:    #555555;
+
+    --header-bg:      rgba(255, 255, 255, 0.92);
+    --nav-mobile-bg:  #ffffff;
+    --input-bg:       #ffffff;
+    --input-border:   #cccccc;
+
+    --shadow-sm:      rgba(183, 75, 75, 0.10);
+    --shadow-md:      rgba(183, 75, 75, 0.18);
+    --shadow-lg:      rgba(183, 75, 75, 0.28);
+}
+
+
+/* ================================================================
+   RESET
+   box-sizing on everything (incl. pseudo-elements).
+   font-family reset on * ONLY — NOT ::before/::after so that
+   Font Awesome can use its own icon font on those pseudo-elements.
+   ================================================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/* ================================================================
+   BASE
+   ================================================================ */
+html {
+    font-size: 62.5%;   /* 1rem = 10px */
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    overflow-x: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding-top: 80px;
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+
+/* ================================================================
+   HEADER  (fixed top bar)
+   ================================================================ */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 9%;
+    height: 80px;
+    background-color: var(--header-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    z-index: 100;
+    transition: background-color 0.35s ease;
+}
+
+
+/* ================================================================
+   NAVBAR
+   position: relative is required so .nav-indicator can use
+   absolute positioning inside nav without escaping the nav bounds.
+   ================================================================ */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    position: relative;       /* bounds the sliding indicator */
+    height: 100%;
+}
+
+/* Nav links */
+nav a {
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 0 0.4rem;
+    margin-left: 3.5rem;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+nav a:first-child {
+    margin-left: 0;
+}
+
+/* RTL — flip margins */
+html[dir="rtl"] nav a            { margin-left: 0; margin-right: 3.5rem; }
+html[dir="rtl"] nav a:first-child { margin-right: 0; }
+
+nav a:hover,
+nav a.active {
+    color: var(--primary-color);
+}
+
+/* ── Smooth sliding underline ──
+   A single red bar that moves horizontally under the active link.
+   left + width are set by JS; transition makes it slide smoothly.
+   bottom: 0 pins it to the bottom edge of the nav (= header bottom). */
+.nav-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background-color: var(--primary-color);
+    border-radius: 2px 2px 0 0;
+    transition: left  0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+
+/* ================================================================
+   TOGGLE BUTTONS  (theme + language)
+   These are siblings of <nav> inside <header>, placed after the
+   flex spacer so they sit on the right side.
+   ================================================================ */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+html[dir="rtl"] .toggle-container {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.toggle-btn:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    transform: scale(1.12);
+}
+
+/* Language button shows text label (EN / AR) */
+.lang-btn {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.04rem;
+}
+
+
+/* ================================================================
+   HAMBURGER BUTTON
+   Three <span class="bar"> elements styled as lines.
+   When .open is added by JS they animate into an × cross.
+   Visible only on mobile (≤995px via media query).
+   ================================================================ */
+.menu-btn {
+    display: none;            /* hidden on desktop */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 6px;
+    flex-shrink: 0;
+    transition: background 0.3s ease;
+}
+
+.menu-btn:hover {
+    background-color: var(--primary-color);
+}
+
+.menu-btn:hover .bar {
+    background-color: #ffffff;
+}
+
+/* Each bar */
+.bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+    transition: transform 0.35s ease, opacity 0.25s ease, background-color 0.3s ease;
+    transform-origin: center;
+}
+
+/* Animate bars → X when .open is added */
+.menu-btn.open .bar:nth-child(1) { transform: translateY(7px) rotate(45deg);  }
+.menu-btn.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0);           }
+.menu-btn.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.menu-btn.open .bar {
+    background-color: var(--primary-color);
+}
+
+
+/* ================================================================
+   SECTIONS — shared rules
+   ================================================================ */
+section {
+    min-height: 100vh;
+    padding: 8rem 9%;
+    background-color: var(--bg-color);
+    transition: background-color 0.35s ease;
+}
+
+/* Section heading */
+.section-title {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 1rem;
+    background: transparent;
+}
+
+/* Red underline accent */
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 6rem;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* RTL: flip underline accent to right */
+html[dir="rtl"] .section-title::after {
+    left: auto;
+    right: 0;
+}
+
+
+/* ================================================================
+   HOME SECTION
+   ================================================================ */
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+    padding-top: 4rem;
+}
+
+/* Profile picture */
+.home-img img {
+    width: 32vw;
+    border-radius: 50%;
+    box-shadow: 0 0 25px var(--primary-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-img img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px var(--primary-color);
+}
+
+/* Greeting headline */
+.home-content h1 {
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+    color: var(--text-color);
+    background: transparent;
+}
+
+/* Red name span */
+.highlight {
+    color: var(--primary-color);
+    background: transparent;
+}
+
+/* Typing subtitle */
+.home-content h3.typing-text {
+    font-size: 3.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    white-space: nowrap;
+    color: var(--text-color);
+    background: transparent;
+}
+
+/* Description paragraph */
+.home-content p {
+    font-size: 1.6rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    background: transparent;
+}
+
+/* Social icon links */
+.social-icons a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin: 3rem 1.5rem 3rem 0;
+    transition: background 0.3s ease, color 0.3s ease,
+                transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+html[dir="rtl"] .social-icons a { margin: 3rem 0 3rem 1.5rem; }
+
+.social-icons a:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    transform: scale(1.3) translateY(-5px);
+    box-shadow: 0 0 25px var(--primary-color);
+}
+
+/* SVG / PNG icons inside social links */
+.social-icons a img {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    background: transparent;
+    filter: invert(36%) sepia(60%) saturate(800%) hue-rotate(314deg) brightness(85%);
+    transition: filter 0.3s ease;
+}
+
+.social-icons a:hover img {
+    filter: brightness(0) invert(1);
+}
+
+
+/* ================================================================
+   TYPING ANIMATION
+   ──────────────────────────────────────────────────────────────
+   HOW IT WORKS:
+   • .typed-word            → has background-color + transition.
+                              This is the KEY — the pseudo-element
+                              will inherit this exact color.
+   • .typed-word::before    → the actual word text, animated
+   • .typed-word::after     → the sliding cover + blinking cursor.
+                              Uses background: inherit so it ALWAYS
+                              matches the parent background perfectly,
+                              even mid-transition between themes.
+                              No separate transition needed here.
+   ================================================================ */
+.typed-word {
+    position: relative;
+    color: var(--primary-color);
+    /* Set bg here so ::after can inherit it — transition applies too */
+    background-color: var(--bg-color);
+    transition: background-color 0.35s ease;
+}
+
+/* Word text — cycles between job titles */
+.typed-word::before {
+    content: "Data Analyst";
+    color: var(--primary-color);
+    background: transparent;
+    animation: wordsEN 8s infinite;
+}
+
+/* Arabic titles — active when data-lang="ar" */
+html[data-lang="ar"] .typed-word::before {
+    animation: wordsAR 8s infinite;
+}
+
+/* Sliding cover + blinking cursor
+   background: inherit  → always matches .typed-word's bg,
+   which itself is always in sync with the page theme          */
+.typed-word::after {
+    content: "";
+    background: inherit;          /* inherits from .typed-word — theme-safe */
+    position: absolute;
+    width: calc(100% + 8px);
+    height: 100%;
+    top: 0;
+    right: -8px;
+    border-left: 3px solid var(--primary-color);
+    animation: cursorBlink 0.6s step-end infinite,
+               typingAnim  8s steps(20, end) infinite;
+}
+
+/* ── Keyframes ── */
+
+@keyframes wordsEN {
+    0%,  49%  { content: "Data Analyst"; }
+    50%, 100% { content: "Power BI Developer"; }
+}
+
+@keyframes wordsAR {
+    0%,  49%  { content: "محلل بيانات"; }
+    50%, 100% { content: "مطوّر Power BI"; }
+}
+
+/* Cover slides from full-width (hidden) → 0 (visible = typing)
+   then back to full-width (erasing)                           */
+@keyframes typingAnim {
+    0%   { width: calc(100% + 8px); }
+    15%  { width: 0; }
+    20%  { width: 0; }
+    35%  { width: calc(100% + 8px); }
+    50%  { width: calc(100% + 8px); }
+    65%  { width: 0; }
+    70%  { width: 0; }
+    85%  { width: calc(100% + 8px); }
+    100% { width: calc(100% + 8px); }
+}
+
+@keyframes cursorBlink {
+    0%, 100% { border-left-color: var(--primary-color); }
+    50%       { border-left-color: transparent; }
+}
+
+
+/* ================================================================
+   SHARED BUTTON
+   ================================================================ */
+.btn {
+    display: inline-block;
+    padding: 1rem 2.8rem;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 4rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    letter-spacing: 0.3rem;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease,
+                transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    transform: scale(1.03);
+    box-shadow: 0 0 25px var(--primary-color);
+}
+
+
+/* ================================================================
+   SKILLS SECTION
+   ================================================================ */
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.skill-card {
+    width: calc(50% - 1rem);
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    padding: 2.5rem 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 0 15px var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+                background-color 0.35s ease;
+}
+
+.skill-card i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    background: transparent;
+}
+
+.skill-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    color: var(--card-text);
+    background: transparent;
+}
+
+.skill-card p {
+    font-size: 1.4rem;
+    color: var(--muted-color);
+    background: transparent;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px var(--shadow-md);
+}
+
+
+/* ================================================================
+   SERVICES SECTION
+   ================================================================ */
+.services-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.service-card {
+    width: calc(33% - 1.5rem);
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    padding: 2.5rem 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 0 15px var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+                background-color 0.35s ease;
+}
+
+.service-card i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    background: transparent;
+}
+
+.service-card h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--card-text);
+    background: transparent;
+}
+
+.service-card p {
+    font-size: 1.4rem;
+    color: var(--muted-color);
+    line-height: 1.6;
+    background: transparent;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px var(--shadow-md);
+}
+
+
+/* ================================================================
+   PROJECTS SECTION
+   ================================================================ */
+.projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.project-card {
+    width: 45%;
+    background-color: var(--card-bg);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0 20px var(--shadow-sm);
+    margin-top: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+                background-color 0.35s ease;
+}
+
+.project-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    background-color: var(--card-bg);
+    padding: 0.5rem;
+}
+
+.project-card h3 {
+    padding: 1rem;
+    font-size: 2rem;
+    color: var(--card-text);
+    background: transparent;
+}
+
+.project-card p {
+    padding: 0 1rem;
+    font-size: 1.4rem;
+    color: var(--muted-color);
+    line-height: 1.6;
+    background: transparent;
+}
+
+.project-card .btn {
+    margin: 1rem;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 30px var(--shadow-md);
+}
+
+
+/* ================================================================
+   CONTACT SECTION
+   ================================================================ */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: 3rem auto 0;
+}
+
+.contact-form label {
+    font-size: 1.4rem;
+    color: var(--text-color);
+    background: transparent;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 1rem;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, background-color 0.35s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: var(--primary-color);
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-form button {
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    border: 2px solid var(--primary-color);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #9f3a3a;
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px var(--shadow-md);
+}
+
+
+/* ================================================================
+   RESPONSIVE — TABLET  (≤ 995px)
+   ================================================================ */
+@media (max-width: 995px) {
+
+    /* Show hamburger */
+    .menu-btn { display: flex; }
+
+    header { padding: 0 6%; }
+
+    /* Mobile nav — slides down from top right as a dropdown panel */
+    nav {
+        position: absolute;
+        top: 80px;       /* directly below the header */
+        right: 0;
+        width: 55%;
+        max-width: 280px;
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 2rem 2.5rem;
+        background-color: var(--nav-mobile-bg);
+        border-left: 3px solid var(--primary-color);
+        border-bottom: 3px solid var(--primary-color);
+        border-bottom-left-radius: 1.6rem;
+        box-shadow: -4px 6px 30px rgba(0, 0, 0, 0.35);
+
+        /* Hidden by default — slides in from above */
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    /* RTL: flip to left side */
+    html[dir="rtl"] nav {
+        right: auto;
+        left: 0;
+        border-left: none;
+        border-right: 3px solid var(--primary-color);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 1.6rem;
+    }
+
+    /* Visible state */
+    nav.active {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0);
+        display: flex;
+    }
+
+    /* Links in dropdown */
+    nav a {
+        display: block;
+        font-size: 1.8rem;
+        margin: 0;
+        padding: 1.2rem 0;
+        width: 100%;
+        height: auto;
+        border-bottom: 1px solid rgba(183, 75, 75, 0.15);
+    }
+
+    nav a:last-of-type {
+        border-bottom: none;
+    }
+
+    html[dir="rtl"] nav a { margin: 0; }
+
+    nav a:hover,
+    nav a.active {
+        color: var(--primary-color);
+        padding-left: 0.8rem;
+    }
+
+    html[dir="rtl"] nav a:hover,
+    html[dir="rtl"] nav a.active {
+        padding-left: 0;
+        padding-right: 0.8rem;
+    }
+
+    /* Hide the desktop sliding indicator inside mobile dropdown */
+    .nav-indicator { display: none; }
+
+    /* Home layout stacks vertically */
+    .home {
+        flex-direction: column;
+        gap: 4rem;
+        padding: 6rem 5% 4rem;
+    }
+
+    .home-content h1    { font-size: 5rem; }
+    .home-content h3    { font-size: 2.5rem; }
+
+    .home-img img {
+        width: 65vw;
+        margin-top: 2rem;
+    }
+
+    .service-card { width: 45%; }
+}
+
+
+/* ================================================================
+   RESPONSIVE — MOBILE  (≤ 768px)
+   ================================================================ */
+@media (max-width: 768px) {
+    .skill-card   { width: calc(50% - 1rem); }
+    .project-card { width: 100%; }
+}
+
+
+/* ================================================================
+   RESPONSIVE — SMALL MOBILE  (≤ 480px)
+   ================================================================ */
+@media (max-width: 480px) {
+    section { padding: 6rem 5%; }
+
+    .skill-card   { width: 100%; }
+    .service-card { width: 100%; }
+
+    .home-content h1 {
+        font-size: 4.2rem;
+        white-space: normal;
+    }
+
+    .home-content h3.typing-text {
+        font-size: 2.2rem;
+    }
+}
+
+
+/* ================================================================
+   RESPONSIVE — VERY SMALL  (≤ 360px)
+   ================================================================ */
+@media (max-width: 360px) {
+    .home-content h1 { font-size: 3.6rem; }
+}
