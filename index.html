@@ -98,7 +98,12 @@
             </a>
         </div>
 
-        <a href="#contact" class="btn" data-translate="getInTouch">Get in Touch</a>
+        <div class="home-btns">
+            <a href="#contact" class="btn" data-translate="getInTouch">Get in Touch</a>
+            <a href="pictures/yousef CV.pdf" class="btn btn-outline" target="_blank" data-translate="cvLink">
+                <i class="fa-solid fa-download"></i> CV
+            </a>
+        </div>
 
     </div>
 
@@ -108,37 +113,35 @@
 <!-- ================================================================
      SKILLS SECTION
      ================================================================ -->
-<section id="skills">
+<section id="skills" class="reveal">
 
     <h2 class="section-title" data-translate="skillsTitle">Skills</h2>
 
     <div class="skills-container">
 
-        <div class="skill-card">
+        <div class="skill-card reveal reveal-delay-1">
             <i class="fa-solid fa-chart-line"></i>
             <h3 data-translate="dataAnalysis">Data Analysis</h3>
             <p data-translate="dataAnalysisDesc">Experience with Power BI, SQL, and data visualization tools.</p>
         </div>
 
-        <div class="skill-card">
+        <div class="skill-card reveal reveal-delay-2">
             <i class="fa-solid fa-chart-bar"></i>
             <h3 data-translate="powerBi">Power BI</h3>
             <p data-translate="powerBiDesc">Advanced proficiency in creating interactive dashboards and reports using Power BI.</p>
         </div>
 
-        <div class="skill-card">
+        <div class="skill-card reveal reveal-delay-3">
             <i class="fa-solid fa-database"></i>
             <h3 data-translate="sql">SQL</h3>
             <p data-translate="sqlDesc">Expertise in writing complex queries for data analysis.</p>
         </div>
 
-        <div class="skill-card">
+        <div class="skill-card reveal reveal-delay-4">
             <i class="fa-solid fa-table"></i>
             <h3 data-translate="excel">Excel</h3>
             <p data-translate="excelDesc">Advanced proficiency in Excel for data manipulation and reporting.</p>
         </div>
-
-        <!-- Add more skill cards here -->
 
     </div>
 
@@ -148,31 +151,29 @@
 <!-- ================================================================
      SERVICES SECTION
      ================================================================ -->
-<section id="services">
+<section id="services" class="reveal">
 
     <h2 class="section-title" data-translate="servicesTitle">Services</h2>
 
     <div class="services-container">
 
-        <div class="service-card">
+        <div class="service-card reveal reveal-delay-1">
             <i class="fa-solid fa-chart-pie"></i>
             <h3 data-translate="dataAnalysis">Data Analysis</h3>
             <p data-translate="serviceDataAnalysisDesc">Providing data-driven insights to help businesses make informed decisions.</p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card reveal reveal-delay-2">
             <i class="fa-solid fa-cogs"></i>
             <h3 data-translate="dataViz">Data Visualization</h3>
             <p data-translate="dataVizDesc">Creating interactive dashboards and reports to visualize data insights.</p>
         </div>
 
-        <div class="service-card">
+        <div class="service-card reveal reveal-delay-3">
             <i class="fa-solid fa-database"></i>
             <h3 data-translate="databaseMgmt">Database Management</h3>
             <p data-translate="databaseMgmtDesc">Efficient management of databases to ensure high performance and security.</p>
         </div>
-
-        <!-- Add more service cards here -->
 
     </div>
 
@@ -186,13 +187,13 @@
          2. Also update the matching key in the translations dictionary
             inside the <script> section below (search for "Projects")
      ================================================================ -->
-<section id="projects">
+<section id="projects" class="reveal">
 
     <h2 class="section-title" data-translate="projectsTitle">Projects</h2>
 
     <div class="projects-container">
 
-        <div class="project-card">
+        <div class="project-card reveal reveal-delay-1">
             <img src="pictures/project1.png" alt="Super Store Analytics">
             <h3 data-translate="project1Title">Super Store Analytics</h3>
             <p  data-translate="project1Desc">DEPI Graduation project focusing on analyzing sales data for a retail store.</p>
@@ -200,7 +201,7 @@
             <a href="https://projectlive.com" target="_blank" class="btn" data-translate="liveDemo">Live Demo</a>
         </div>
 
-        <div class="project-card">
+        <div class="project-card reveal reveal-delay-2">
             <img src="pictures/project2.png" alt="Project 2">
             <h3 data-translate="project2Title">Project 2</h3>
             <p  data-translate="project2Desc">Brief description of the project.</p>
@@ -208,15 +209,13 @@
             <a href="https://projectlive.com"         target="_blank" class="btn" data-translate="liveDemo">Live Demo</a>
         </div>
 
-        <div class="project-card">
+        <div class="project-card reveal reveal-delay-3">
             <img src="pictures/project3.png" alt="Project 3">
             <h3 data-translate="project3Title">Project 3</h3>
             <p  data-translate="project3Desc">Brief description of the project.</p>
             <a href="https://github.com/your-project" target="_blank" class="btn" data-translate="githubLink">GitHub</a>
             <a href="https://projectlive.com"         target="_blank" class="btn" data-translate="liveDemo">Live Demo</a>
         </div>
-
-        <!-- Add more project cards here -->
 
     </div>
 
@@ -226,7 +225,7 @@
 <!-- ================================================================
      CONTACT SECTION
      ================================================================ -->
-<section id="contact">
+<section id="contact" class="reveal">
 
     <h2 class="section-title" data-translate="contactTitle">Contact</h2>
 
@@ -459,7 +458,18 @@
         const newLang = html.getAttribute("data-lang") === "en" ? "ar" : "en";
         html.setAttribute("data-lang", newLang);
         applyTranslations(newLang);
+        restartTypingAnimation();
     });
+
+    /* Restart typing animation so ::before and ::after stay in sync
+       after language switch (::before animation changes → restarts,
+       but ::after wouldn't without this) */
+    function restartTypingAnimation() {
+        const tw = document.querySelector(".typed-word");
+        const parent = tw.parentNode;
+        const clone = tw.cloneNode(true);
+        parent.replaceChild(clone, tw);
+    }
 
 
     /* ----------------------------------------------------------------
@@ -526,8 +536,56 @@
 
 
     /* ----------------------------------------------------------------
-       7. INITIALISATION  (runs after full DOM is ready)
-       ---------------------------------------------------------------- */
+        7. SCROLL REVEAL — fade/slide elements in as they enter viewport
+        ---------------------------------------------------------------- */
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        root:       null,
+        rootMargin: "0px 0px -80px 0px",
+        threshold:  0.1
+    });
+
+    document.querySelectorAll(".reveal, .reveal-left, .reveal-right")
+        .forEach(el => revealObserver.observe(el));
+
+
+    /* ----------------------------------------------------------------
+        8. BACK TO TOP BUTTON
+        ---------------------------------------------------------------- */
+    const backToTop = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add("visible");
+        } else {
+            backToTop.classList.remove("visible");
+        }
+    });
+
+    backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+
+    /* ----------------------------------------------------------------
+        10. HEADER SHRINK ON SCROLL
+        ---------------------------------------------------------------- */
+    const header = document.querySelector("header");
+
+    window.addEventListener("scroll", () => {
+        header.classList.toggle("header-shrink", window.scrollY > 100);
+    });
+
+
+    /* ----------------------------------------------------------------
+        11. INITIALISATION  (runs after full DOM is ready)
+        ---------------------------------------------------------------- */
     document.addEventListener("DOMContentLoaded", () => {
         applyTranslations("en");
         const firstActive = navbar.querySelector("a.active");
@@ -535,6 +593,11 @@
     });
 
 </script>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
 
 </body>
 </html>
