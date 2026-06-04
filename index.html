@@ -14,6 +14,16 @@
 
 <body>
 
+<div id="intro-overlay">
+  <div class="intro-content">
+    <h1 class="intro-name">Yousef Ali</h1>
+    <p class="intro-role">Data Analyst &amp; Power BI Developer</p>
+    <div class="intro-bar">
+      <div class="intro-bar-fill"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ================================================================
      HEADER  (fixed top bar)
      - <nav> holds ONLY section links + the sliding indicator span
@@ -52,6 +62,7 @@
 
 </header>
 
+<div class="nav-backdrop" id="navBackdrop"></div>
 
 <!-- ================================================================
      HOME SECTION
@@ -256,6 +267,11 @@
 
 </section>
 
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
 
 <!-- ================================================================
      JAVASCRIPT
@@ -521,9 +537,12 @@
           .open on menuBtn  → animates 3 bars into an X
           .active on navbar → slides the dropdown panel in
        ---------------------------------------------------------------- */
+    const navBackdrop = document.getElementById("navBackdrop");
+
     menuBtn.addEventListener("click", () => {
         menuBtn.classList.toggle("open");
         navbar.classList.toggle("active");
+        navBackdrop.classList.toggle("active");
     });
 
     /* Close dropdown + reset hamburger when any link is tapped */
@@ -531,7 +550,14 @@
         link.addEventListener("click", () => {
             navbar.classList.remove("active");
             menuBtn.classList.remove("open");
+            navBackdrop.classList.remove("active");
         });
+    });
+
+    navBackdrop.addEventListener("click", () => {
+        navbar.classList.remove("active");
+        menuBtn.classList.remove("open");
+        navBackdrop.classList.remove("active");
     });
 
 
@@ -574,17 +600,21 @@
 
 
     /* ----------------------------------------------------------------
-        10. HEADER SHRINK ON SCROLL
+        11. ANIMATED INTRO
         ---------------------------------------------------------------- */
-    const header = document.querySelector("header");
+    const introOverlay = document.getElementById("intro-overlay");
 
-    window.addEventListener("scroll", () => {
-        header.classList.toggle("header-shrink", window.scrollY > 100);
-    });
+    setTimeout(() => {
+        introOverlay.classList.add("fade-out");
+    }, 3500);
+
+    setTimeout(() => {
+        introOverlay.style.display = "none";
+    }, 5000);
 
 
     /* ----------------------------------------------------------------
-        11. INITIALISATION  (runs after full DOM is ready)
+        12. INITIALISATION  (runs after full DOM is ready)
         ---------------------------------------------------------------- */
     document.addEventListener("DOMContentLoaded", () => {
         applyTranslations("en");
@@ -593,11 +623,6 @@
     });
 
 </script>
-
-<!-- Back to top -->
-<button class="back-to-top" id="backToTop" aria-label="Back to top">
-    <i class="fa-solid fa-arrow-up"></i>
-</button>
 
 </body>
 </html>
