@@ -247,31 +247,31 @@ html[dir="rtl"] .toggle-container {
    Visible only on mobile (≤995px via media query).
    ================================================================ */
 .menu-btn {
-    display: none;            /* hidden on desktop */
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 5px;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     background: transparent;
     border: 2px solid var(--primary-color);
-    border-radius: 8px;
+    border-radius: 50%;
     cursor: pointer;
-    padding: 6px;
+    padding: 10px;
     flex-shrink: 0;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .menu-btn:hover {
     background-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(183, 75, 75, 0.4);
 }
 
 .menu-btn:hover .bar {
     background-color: #ffffff;
 }
 
-/* Each bar */
 .bar {
     display: block;
     width: 100%;
@@ -282,13 +282,16 @@ html[dir="rtl"] .toggle-container {
     transform-origin: center;
 }
 
-/* Animate bars → X when .open is added */
 .menu-btn.open .bar:nth-child(1) { transform: translateY(7px) rotate(45deg);  }
 .menu-btn.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0);           }
 .menu-btn.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 .menu-btn.open .bar {
     background-color: var(--primary-color);
+}
+
+.menu-btn.open:hover .bar {
+    background-color: #ffffff;
 }
 
 
@@ -535,19 +538,6 @@ html[data-lang="ar"] .typed-word::before {
     gap: 1.5rem;
     margin-top: 2rem;
     flex-wrap: wrap;
-}
-
-
-/* ================================================================
-   HEADER SHRINK ON SCROLL
-   ================================================================ */
-header.header-shrink {
-    height: 60px;
-    padding: 0 9%;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
-}
-header.header-shrink nav a {
-    font-size: 1.5rem;
 }
 
 
@@ -947,6 +937,30 @@ html[dir="rtl"] .back-to-top {
 
 
 /* ================================================================
+   NAV BACKDROP (mobile)
+   ================================================================ */
+.nav-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 99;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.nav-backdrop.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+
+/* ================================================================
    RESPONSIVE — TABLET  (≤ 995px)
    ================================================================ */
 @media (max-width: 995px) {
@@ -954,73 +968,83 @@ html[dir="rtl"] .back-to-top {
     .menu-btn { display: flex; }
 
     header { padding: 0 6%; }
-    header.header-shrink { padding: 0 6%; height: 60px; }
 
     nav {
         position: absolute;
-        top: 80px;
-        right: 0;
-        width: 55%;
-        max-width: 280px;
+        top: calc(100% + 8px);
+        right: 6%;
+        width: auto;
+        min-width: 210px;
         height: auto;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
-        padding: 2rem 2.5rem;
-        background-color: var(--nav-mobile-bg);
-        border-left: 3px solid var(--primary-color);
-        border-bottom: 3px solid var(--primary-color);
-        border-bottom-left-radius: 1.6rem;
-        box-shadow: -4px 6px 30px rgba(0, 0, 0, 0.35);
-        opacity: 0;
+        align-items: stretch;
+        gap: 4px;
+        padding: 0.8rem;
+        background: rgba(22, 22, 22, 0.88);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(183, 75, 75, 0.15);
+        border-radius: 1.6rem;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
         pointer-events: none;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transform: translateY(-8px) scale(0.96);
+        opacity: 0;
+        transform-origin: top right;
+        transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        z-index: 100;
     }
 
     html[dir="rtl"] nav {
         right: auto;
-        left: 0;
-        border-left: none;
-        border-right: 3px solid var(--primary-color);
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 1.6rem;
+        left: 6%;
+        transform-origin: top left;
+        transform: translateY(-8px) scale(0.96);
     }
 
     nav.active {
-        opacity: 1;
         pointer-events: all;
-        transform: translateY(0);
-        display: flex;
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 
     nav a {
         display: block;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+        font-weight: 500;
         margin: 0;
-        padding: 1.2rem 0;
+        padding: 1.1rem 1.6rem;
         width: 100%;
         height: auto;
-        border-bottom: 1px solid rgba(183, 75, 75, 0.15);
+        color: var(--text-color);
+        border-radius: 1rem;
+        opacity: 0;
+        transform: translateX(-8px);
+        transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease, color 0.3s ease, padding 0.3s ease;
+        transition-delay: 0s;
     }
 
-    nav a:last-of-type {
-        border-bottom: none;
+    nav.active a {
+        opacity: 1;
+        transform: translateX(0);
     }
 
-    html[dir="rtl"] nav a { margin: 0; }
+    nav.active a:nth-child(1) { transition-delay: 0.05s; }
+    nav.active a:nth-child(2) { transition-delay: 0.1s; }
+    nav.active a:nth-child(3) { transition-delay: 0.15s; }
+    nav.active a:nth-child(4) { transition-delay: 0.2s; }
+    nav.active a:nth-child(5) { transition-delay: 0.25s; }
 
     nav a:hover,
     nav a.active {
         color: var(--primary-color);
-        padding-left: 0.8rem;
+        background: rgba(183, 75, 75, 0.1);
+        padding-left: 2.2rem;
     }
 
+    html[dir="rtl"] nav a { transform: translateX(8px); }
+    html[dir="rtl"] nav.active a { transform: translateX(0); }
     html[dir="rtl"] nav a:hover,
-    html[dir="rtl"] nav a.active {
-        padding-left: 0;
-        padding-right: 0.8rem;
-    }
+    html[dir="rtl"] nav a.active { padding-left: 1.6rem; padding-right: 2.2rem; }
 
     .nav-indicator { display: none; }
 
@@ -1093,4 +1117,93 @@ html[dir="rtl"] .back-to-top {
 .project-card.visible:hover {
     transform: translateY(-10px) !important;
     box-shadow: 0 0 30px var(--shadow-md);
+}
+
+/* ===================== ANIMATED INTRO ===================== */
+#intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+#intro-overlay.fade-out {
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+.intro-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.intro-name {
+  font-size: 6rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  animation: introNameIn 1s ease forwards;
+}
+
+@keyframes introNameIn {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.intro-role {
+  font-size: 3.4rem;
+  font-weight: 600;
+  color: #b74b4b;
+  margin: 0;
+  opacity: 0;
+  animation: introFadeIn 0.8s ease 1s forwards;
+}
+
+@keyframes introFadeIn {
+  to { opacity: 1; }
+}
+
+.intro-bar {
+  width: 300px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 1rem;
+  opacity: 0;
+  animation: introFadeIn 0.4s ease 2s forwards;
+}
+
+.intro-bar-fill {
+  height: 100%;
+  width: 0;
+  background: #b74b4b;
+  border-radius: 4px;
+  animation: introProgress 1.2s ease 2s forwards;
+}
+
+@keyframes introProgress {
+  to { width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .intro-name { font-size: 4rem; }
+  .intro-role { font-size: 2.2rem; }
+  .intro-bar { width: 220px; }
+}
+
+@media (max-width: 480px) {
+  .intro-name { font-size: 3rem; }
+  .intro-role { font-size: 1.6rem; }
+  .intro-bar { width: 180px; }
 }
